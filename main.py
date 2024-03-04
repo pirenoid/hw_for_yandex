@@ -4,13 +4,14 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QDialog
+from UI.main_ui import Ui_MainWindow
+from UI.addEditCoffeeForm_ui import Ui_Form
 
-
-class Coffee(QMainWindow):
+class Coffee(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)
-        self.connection = sqlite3.connect("coffee.sqlite")
+        self.setupUi(self)
+        self.connection = sqlite3.connect("data/coffee.sqlite")
         self.pushButton.clicked.connect(self.select_data)
         self.pushButton_add.clicked.connect(self.open_add_form)
         self.pushButton_edit.clicked.connect(self.open_edit_form)
@@ -55,10 +56,10 @@ class Coffee(QMainWindow):
         add_form.exec_()
 
 
-class AddEditForm(QDialog):
+class AddEditForm(QDialog, Ui_Form):
     def __init__(self, data=None, parent=None):
         super().__init__(parent)
-        uic.loadUi('addEditCoffeeForm.ui', self)
+        self.setupUi(self)
         self.pushButton_save.clicked.connect(self.save_data)
         self.pushButton_cancel.clicked.connect(self.hide)
 
@@ -85,7 +86,7 @@ class AddEditForm(QDialog):
         pack_size = self.spinBox_pack_size.value()
         coffee_id = self.lineEdit1.text()
 
-        connection = sqlite3.connect("coffee.sqlite")
+        connection = sqlite3.connect("data/coffee.sqlite")
         cursor = connection.cursor()
         if coffee_id != "AUTO":
             cursor.execute("""UPDATE coffee 

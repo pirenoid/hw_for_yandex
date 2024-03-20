@@ -7,6 +7,7 @@ from PyQt5.QtWidgets import QMainWindow, QTableWidgetItem, QDialog
 from UI.main_ui import Ui_MainWindow
 from UI.addEditCoffeeForm_ui import Ui_Form
 
+
 class Coffee(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
